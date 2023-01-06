@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { BiCode } from "react-icons/bi";
+import Image from "next/image";
+import Link from "next/link";
 import { BsEye } from "react-icons/bs";
 type Props = {};
 const Login = (props: Props) => {
@@ -11,14 +12,14 @@ const Login = (props: Props) => {
       </Head>
       <section className="h-screen bg-gradient-to-tl from-[#F4F5FA] to-[#F4F5FA] w-full py-16 px-4">
         <div className="flex flex-col items-center justify-center">
-          <h1 className="text-5xl font-bold font-poppins flex items-center gap-2">
-            <span className="text-7xl font-bold text-green-400">
-              <BiCode />
-            </span>
-            <span className="text-gray-600 flex items-center gap-2">
-              Ashik <span className="text-green-400">Code</span>
-            </span>
-          </h1>
+          <Link href="/">
+            <Image
+              src="https://tuk-cdn.s3.amazonaws.com/can-uploader/centre_aligned_simple-Svg1.svg"
+              width={100}
+              height={100}
+              alt=""
+            />
+          </Link>
           <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
             <p
               tabIndex={0}
@@ -78,7 +79,7 @@ const Login = (props: Props) => {
               <button
                 role="button"
                 aria-label="create my account"
-                className="focus:ring-2 focus:ring-offset-2 focus:ring-green-600 text-sm font-semibold leading-none text-white focus:outline-none bg-green-600 border rounded hover:bg-green-500 py-4 w-full"
+                className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 text-md font-semibold leading-none text-white focus:outline-none bg-indigo-600 border rounded hover:bg-indigo-500 py-4 w-full font-poppins "
               >
                 Login to my account
               </button>
