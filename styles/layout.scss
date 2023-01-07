@@ -125,4 +125,26 @@ $primary-color: #975efe;
   margin-left: 320px;
   padding: 20px;
   transition: all 0.5s ease;
+  width: 100%;
+
+  .dashboard-header {
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    .right-content {
+      gap: 1rem;
+      justify-self: end;
+      .avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: rgb(228, 228, 228);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: bold;
+      }
+    }
+  }
 }

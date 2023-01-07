@@ -23,7 +23,7 @@ const Sidebar = ({ isHide, setIsHide }: Props) => {
           {isHide ? <BsArrowRightShort /> : <BsArrowLeftShort />}
         </span>
       </div>
-      <ul className="p-6 sidebar-menus">
+      <ul className="sidebar-menus">
         <li className="flex items-center justify-between cursor-pointer">
           <Link href={"/dashboard"}>
             <span className="icon">
