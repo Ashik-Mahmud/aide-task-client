@@ -1,0 +1,128 @@
+$sidebar-width: 300px;
+$sidebar-color: #f4f5fa;
+$primary-color: #975efe;
+
+/* dashboard */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f5fa;
+  position: relative;
+  overflow: hidden;
+  .sidebar {
+    z-index: 1;
+  }
+}
+
+/* sidebar */
+.sidebar {
+  background-color: $sidebar-color;
+  border-radius: 3px;
+
+  margin-bottom: 20px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: $sidebar-width;
+  overflow-y: auto;
+  height: 100%;
+  transition: all 0.5s ease;
+  border-radius: 0px 3px 3px 0px;
+  border-right: 1px solid rgba(58, 53, 65, 0.1);
+
+  .sidebar-header {
+    margin-bottom: 20px;
+    padding: 1rem 1.2rem;
+    .sidebar__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #000;
+      text-transform: uppercase;
+      color: rgba(58, 53, 65, 0.87);
+      transition: all 0.3s ease;
+    }
+    .sidebar__left_arrow {
+      font-size: 1.3rem;
+      color: #ffffff;
+      background-color: $primary-color;
+      cursor: pointer;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+  }
+
+  .sidebar-menus {
+    position: relative;
+    li {
+      padding: 0rem 1.2rem;
+      &:hover {
+        background-color: rgba(207, 207, 207, 0.068);
+      }
+      &.active {
+        background-color: rgba(58, 53, 65, 0.1);
+        color: $primary-color;
+      }
+    }
+    a {
+      display: flex;
+      padding: 0.5rem 0rem;
+      color: rgba(58, 53, 65, 0.87);
+      font-size: 1rem;
+      font-weight: 400;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      gap: 0.4rem;
+      align-items: center;
+
+      .text {
+        transition: all 0.3s ease;
+      }
+
+      .icon {
+        font-size: 1.3rem;
+        width: 35px;
+        height: 35px;
+        display: grid;
+        place-items: center;
+      }
+    }
+  }
+
+  // while active
+  &.active {
+    width: 60px;
+    padding: 0;
+
+    .sidebar-header {
+      justify-content: center;
+      margin: 1rem;
+      .sidebar__title {
+        transform: scale(0);
+
+        position: absolute;
+      }
+    }
+    a {
+      text-align: center;
+      .icon {
+        width: 100%;
+      }
+    }
+    .text {
+      transform: scale(0);
+      position: absolute;
+    }
+
+    & + .dashboard-content {
+      margin-left: 60px;
+    }
+  }
+}
+
+/* dashboard content */
+.dashboard-content {
+  margin-left: 320px;
+  padding: 20px;
+  transition: all 0.5s ease;
+}

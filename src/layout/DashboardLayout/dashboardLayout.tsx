@@ -1,24 +1,25 @@
+import { useState } from "react";
 import Sidebar from "./sidebar/Sidebar";
-
 type Props = {
   children: React.ReactNode;
 };
 
 const DashboardLayout = ({ children }: Props) => {
+  const [isHide, setIsHide] = useState(false);
   return (
-    <div>
+    <section className="dashboard ">
       {/* sidebar */}
-      <div className="sidebar w-[400px] bg-gray-500">
-        <Sidebar />
-      </div>
+      <aside className={`sidebar  ${isHide ? " active " : " "}`}>
+        <Sidebar setIsHide={setIsHide} isHide={isHide} />
+      </aside>
       {/* main content area */}
-      <div className="dashboard-content">
+      <div className="dashboard-content ">
         <div className="dashboard-header">
           <h1 className="font-bold text-2xl">header</h1>
         </div>
         {children}
       </div>
-    </div>
+    </section>
   );
 };
 

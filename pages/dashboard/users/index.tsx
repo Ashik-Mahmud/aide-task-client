@@ -3,7 +3,7 @@ import DashboardLayout from "../../../src/layout/DashboardLayout/dashboardLayout
 type Props = {};
 
 const UsersManage = (props: Props) => {
-  return <div>UsersManage</div>;
+  return <div className="bg-gray-50">UsersManage</div>;
 };
 
 UsersManage.getLayout = (page: React.ReactNode) => (
