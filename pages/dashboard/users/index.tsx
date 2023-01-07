@@ -72,11 +72,6 @@ const UsersManage = (props: Props) => {
             <UserRow />
             <UserRow />
             <UserRow />
-            <UserRow />
-            <UserRow />
-            <UserRow />
-            <UserRow />
-            <UserRow />
           </tbody>
         </table>
 

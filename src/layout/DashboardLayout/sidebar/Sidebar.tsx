@@ -65,7 +65,7 @@ const Sidebar = ({ isHide, setIsHide }: Props) => {
           </ul>
         </li>
         <li className="flex items-center justify-between cursor-pointer">
-          <Link href={"/dashboard/products"}>
+          <Link href={"/dashboard/add-user"}>
             <span className="icon">
               <BiUser />
             </span>
