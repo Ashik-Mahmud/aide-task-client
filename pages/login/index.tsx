@@ -91,4 +91,8 @@ const Login = (props: Props) => {
   );
 };
 
+Login.getLayout = (page: React.ReactNode) => {
+  return <>{page}</>;
+};
+
 export default Login;
