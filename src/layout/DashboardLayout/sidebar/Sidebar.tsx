@@ -73,7 +73,7 @@ const Sidebar = ({ isHide, setIsHide }: Props) => {
           </Link>
         </li>
         <li className="flex items-center justify-between cursor-pointer">
-          <Link href={"/dashboard/products"}>
+          <Link href={"/dashboard/add-product"}>
             <span className="icon">
               <MdContentCopy />
             </span>
