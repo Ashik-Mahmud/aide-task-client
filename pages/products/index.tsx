@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Card from "../../src/components/Card";
 
 type Props = {};
@@ -5,6 +6,9 @@ type Props = {};
 const Products = (props: Props) => {
   return (
     <>
+      <Head>
+        <title>Products</title>
+      </Head>
       <div className="bg-gray-100 py-36 pt-16">
         <div className="container mx-auto px-6 pb-8">
           <div className="flex justify-center items-center flex-col   mx-auto sm:w-[60rem] mb-16">
