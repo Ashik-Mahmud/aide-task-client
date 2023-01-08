@@ -59,6 +59,14 @@ const UserApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+
+    // get all the products
+    getAllProduct: builder.query({
+      query: (data: any) => ({
+        url: `/product/all`,
+      }),
+      providesTags: ["User"],
+    }),
   }),
 });
 
@@ -68,5 +76,6 @@ export const {
   useDeleteUserMutation,
   useEditUserMutation,
   useAddProductMutation,
+  useGetAllProductQuery,
 } = UserApi;
 export default UserApi;

@@ -1,9 +1,14 @@
 import Head from "next/head";
+import { useGetAllProductQuery } from "../../api/UserApi";
 import Card from "../../src/components/Card";
+import Loader from "../../src/components/Loader";
 
 type Props = {};
 
 const Products = (props: Props) => {
+  const { data, isLoading, error } = useGetAllProductQuery({});
+
+  console.log(data, error);
   return (
     <>
       <Head>
@@ -21,12 +26,23 @@ const Products = (props: Props) => {
               online
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </div>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {data?.products?.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                    {data?.products?.map((item: any) => (
+                      <Card key={item?._id} item={item} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <h2 className="text-xl text-center">No data found</h2>
+              )}
+            </>
+          )}
         </div>
       </div>
     </>

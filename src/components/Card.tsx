@@ -1,18 +1,25 @@
+import formatDistance from "date-fns/formatDistance";
 import Image from "next/image";
 
-type Props = {};
+type Props = {
+  item: any;
+};
 
-const Card = (props: Props) => {
+const Card = ({ item }: Props) => {
+  var timeDistance = formatDistance(new Date(), new Date(item?.createdAt), {
+    includeSeconds: true,
+  });
+
   return (
     <div>
       <div className="mx-2  lg:mb-0 mb-8">
         <div>
           <Image
-            src="/Bitmap.png"
-            className="w-full h-44"
+            src={item?.image?.url || "/Bitmap.png"}
+            className="w-full h-44 border-b object-cover"
             width={300}
             height={200}
-            alt="iphone XS"
+            alt={item?.name || "iphone XS"}
           />
         </div>
         <div className="bg-white">
@@ -40,12 +47,11 @@ const Card = (props: Props) => {
           </div>
           <div className="p-4">
             <div className="flex items-center">
-              <h2 className="text-lg font-semibold">iphone XS</h2>
-              <p className="text-xs text-gray-600 pl-5">4 days ago</p>
+              <h2 className="text-lg font-semibold">{item?.name}</h2>
+              <p className="text-xs text-gray-600 pl-5">{timeDistance}</p>
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              The Apple iPhone XS is available in 3 colors with 64GB memory.
-              Shoot amazing videos
+              {item?.description?.slice(0, 100)}
             </p>
             <div className="flex mt-4">
               <div>
@@ -60,10 +66,10 @@ const Card = (props: Props) => {
               </div>
             </div>
             <div className="flex items-center justify-between py-4">
-              <h2 className="text-indigo-700 text-xs font-semibold">
-                Bay Area, San Francisco
-              </h2>
-              <h3 className="text-indigo-700 text-xl font-semibold">$350</h3>
+              <h2 className="text-indigo-700 text-xs font-semibold">Price</h2>
+              <h3 className="text-indigo-700 text-xl font-semibold">
+                ${item?.price}
+              </h3>
             </div>
             <div className="my-2">
               <button className="bg-indigo-700 text-white w-full py-2 rounded-md">
