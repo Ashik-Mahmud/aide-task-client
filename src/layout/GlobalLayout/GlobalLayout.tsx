@@ -75,20 +75,25 @@ const GlobalLayout = ({ children }: Props) => {
                 </li>
 
                 <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
-                  <a
+                  <Link
                     target={"_blank"}
                     href="https://www.showwcase.com/ashik-mahmud"
                     rel="noreferrer"
                   >
                     About
-                  </a>
+                  </Link>
                 </li>
 
                 <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
                   <Link href="/dashboard">Dashboard</Link>
                 </li>
                 <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
-                  <Link href="/carts">Carts</Link>
+                  <Link href="/carts" className="flex items-center">
+                    Carts{" "}
+                    <sup className="badge bg-blue-50 text-blue-500 border border-blue-200 w-6 h-6 grid place-items-center p-2 rounded-full">
+                      0
+                    </sup>
+                  </Link>
                 </li>
               </ul>
             </div>

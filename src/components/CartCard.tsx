@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BiX } from "react-icons/bi";
 
 type Props = {};
@@ -7,7 +8,7 @@ const CartCard = (props: Props) => {
     <div className="carts-body-left-item flex gap-4 shadow p-4 rounded justify-between items-center bg-gray-50">
       <div className="flex items-start gap-5 ">
         <div className="carts-body-left-item-image">
-          <img
+          <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIC2m4o5Ff_s_BOIL0-y7uq8m_Kqrn0Yq1Q&usqp=CAU"
             alt=""
             width={100}

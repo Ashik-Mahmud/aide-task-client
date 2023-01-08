@@ -1,3 +1,4 @@
+import Head from "next/head";
 import CartCard from "../../src/components/CartCard";
 
 type Props = {};
@@ -5,6 +6,9 @@ type Props = {};
 const Carts = (props: Props) => {
   return (
     <div>
+      <Head>
+        <title>Carts</title>
+      </Head>
       <div className="container mx-auto my-5">
         <div className="title my-3 font-bold font-poppins">
           <h1 className="text-2xl">Carts</h1>
@@ -16,7 +20,7 @@ const Carts = (props: Props) => {
         <div className="carts-area">
           <div className="carts ">
             <div className="carts-header flex items-start justify-between">
-              <div className="carts-header-left">
+              <div className="carts-header-left mb-4">
                 <div className="carts-header-left-title">
                   <h1>Shopping Cart</h1>
                 </div>
