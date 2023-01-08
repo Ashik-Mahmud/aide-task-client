@@ -47,7 +47,7 @@ const Sidebar = ({ isHide, setIsHide }: Props) => {
             </Link>
             <span>{openSubMenu ? <BiChevronUp /> : <BiChevronDown />}</span>
           </div>
-          <ul className={`bg-gray-50 ${openSubMenu ? " h-60 " : " hidden "}`}>
+          <ul className={`bg-gray-50 ${openSubMenu ? " " : " hidden "}`}>
             <li className="flex items-center justify-between cursor-pointer">
               <Link href={"/dashboard/users"}>
                 <span className="icon">
