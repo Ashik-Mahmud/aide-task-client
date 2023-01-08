@@ -31,7 +31,7 @@ const UserRow = (props: Props) => {
       </td>
       <td className="text-center  p-2">
         <div>
-          <span className="bg-orange-50 inline-block px-5 text-orange-300 p-1 rounded-full text-sm w-auto capitalize">
+          <span className="bg-orange-50 inline-block px-5 text-orange-300 p-1 rounded-full text-sm w-auto capitalize ">
             pending
           </span>
         </div>
