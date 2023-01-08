@@ -1,11 +1,20 @@
 import Image from "next/image";
 import { BiX } from "react-icons/bi";
+import { useAppDispatch } from "../../app/hooks";
+import { removeToCart } from "../../features/ProductSlice/ProductSlice";
 
 type Props = {
   cart: any;
 };
 
 const CartCard = ({ cart }: Props) => {
+  const dispatch = useAppDispatch();
+
+  // remove to cart
+  const handleRemoveToCart = () => {
+    dispatch(removeToCart(cart?._id));
+  };
+
   return (
     <div className="carts-body-left-item flex gap-4 shadow p-4 rounded justify-between items-center bg-gray-50">
       <div className="flex items-start gap-5 ">
@@ -50,7 +59,10 @@ const CartCard = ({ cart }: Props) => {
           <button className="w-10 h-10 bg-gray-50 text-xl">+</button>
         </div>
         <div className="carts-body-left-item-action-delete">
-          <button className="text-red-500  p-2 text-2xl">
+          <button
+            className="text-red-500  p-2 text-2xl"
+            onClick={handleRemoveToCart}
+          >
             <BiX />
           </button>
         </div>

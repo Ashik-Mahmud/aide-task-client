@@ -27,8 +27,23 @@ const productSlice = createSlice({
         state.count = state.count + 1;
       }
     },
+    removeToCart: (state, action) => {
+      const isHas = state?.carts?.find(
+        (cart: any) => cart?._id === action?.payload
+      );
+      if (isHas) {
+        const remaining = state?.carts.filter(
+          (cart: any) => cart?._id !== action?.payload
+        );
+        isHas.quantity = isHas.quantity - 1;
+        state.carts = [...remaining, isHas];
+        if (isHas.quantity === 0) {
+          state.carts = remaining;
+        }
+      }
+    },
   },
 });
 
-export const { addToCart } = productSlice.actions;
+export const { addToCart, removeToCart } = productSlice.actions;
 export default productSlice.reducer;
