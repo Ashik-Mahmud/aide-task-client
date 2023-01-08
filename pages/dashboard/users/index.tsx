@@ -15,7 +15,7 @@ const UsersManage = (props: Props) => {
         <h2 className="text-3xl font-medium text-violet-500">All Users</h2>
 
         {/* table area */}
-        <div className="table-area overflow-x-auto bg-white pb-5 my-4 rounded-md shadow font-poppins">
+        <div className="table-area overflow-x-auto bg-white pb-5 my-4 rounded-md shadow font-poppins w-full">
           <div className="action-btns flex items-center justify-between my-3 p-2 px-5 ">
             <div className="flex items-center gap-3">
               <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
@@ -46,7 +46,7 @@ const UsersManage = (props: Props) => {
               </button>
             </div>
           </div>
-          <table className="w-full text-left p-4">
+          <table className="sm:w-full text-left p-4">
             <thead className="bg-gray-50">
               <tr className="border-b">
                 <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-8">
