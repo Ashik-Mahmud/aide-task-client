@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 type Props = {};
@@ -72,19 +73,24 @@ const Hero = (props: Props) => {
               </button>
               <ul className="flex text-3xl md:text-base items-center py-10 md:flex flex-col md:flex-row justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20">
                 <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0">
-                  <a href="javascript: void(0)">Feature</a>
+                  <Link href="/products">Products</Link>
+                </li>
+
+                <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
+                  <a
+                    target={"_blank"}
+                    href="https://www.showwcase.com/ashik-mahmud"
+                    rel="noreferrer"
+                  >
+                    About
+                  </a>
+                </li>
+
+                <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
+                  <Link href="/dashboard">Dashboard</Link>
                 </li>
                 <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
-                  <a href="javascript: void(0)">Marketplace</a>
-                </li>
-                <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
-                  <a href="javascript: void(0)">Company</a>
-                </li>
-                <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
-                  <a href="javascript: void(0)">Features</a>
-                </li>
-                <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
-                  <a href="javascript: void(0)">Contact</a>
+                  <Link href="/">Carts</Link>
                 </li>
               </ul>
             </div>

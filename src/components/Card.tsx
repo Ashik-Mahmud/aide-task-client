@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Props = {};
 
 const Card = (props: Props) => {
@@ -5,9 +7,12 @@ const Card = (props: Props) => {
     <div>
       <div className="mx-2  lg:mb-0 mb-8">
         <div>
-          <img
-            src="https://cdn.tuk.dev/assets/templates/classified/Bitmap.png"
+          <Image
+            src="/Bitmap.png"
             className="w-full h-44"
+            width={300}
+            height={200}
+            alt="iphone XS"
           />
         </div>
         <div className="bg-white">
