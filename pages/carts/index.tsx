@@ -1,9 +1,14 @@
 import Head from "next/head";
+import { useAppSelector } from "../../app/hooks";
 import CartCard from "../../src/components/CartCard";
 
 type Props = {};
 
 const Carts = (props: Props) => {
+  const { carts, count } = useAppSelector((state) => state.product);
+
+  console.log(carts, count);
+
   return (
     <div>
       <Head>
@@ -25,15 +30,23 @@ const Carts = (props: Props) => {
                   <h1>Shopping Cart</h1>
                 </div>
                 <div className="carts-header-left-subtitle">
-                  <p>2 items</p>
+                  <p>{carts?.length} items</p>
                 </div>
               </div>
             </div>
             <div className="carts-body grid grid-cols-6 items-start gap-5">
-              <div className="carts-body-left flex flex-col gap-3 col-span-4">
-                <CartCard />
-                <CartCard />
-              </div>
+              {carts?.length > 0 ? (
+                <>
+                  <div className="carts-body-left flex flex-col gap-3 col-span-4">
+                    {carts?.map((cart: any) => (
+                      <CartCard key={cart?._id} cart={cart} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="py-3 text-center">NO CARTS FOUND.</div>
+              )}
+
               {/* total dashboard */}
               <div className="carts-total-dashboard  col-span-2 p-5 bg-gray-50">
                 <div className="carts-total-dashboard-header flex justify-between items-center p-4 shadow rounded bg-white">
