@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useGetAllProductQuery } from "../../api/UserApi";
+import { useAppSelector } from "../../app/hooks";
 import Card from "../../src/components/Card";
 import Loader from "../../src/components/Loader";
 
@@ -7,6 +8,9 @@ type Props = {};
 
 const Products = (props: Props) => {
   const { data, isLoading, error } = useGetAllProductQuery({});
+  const state = useAppSelector((state) => state.product);
+
+  console.log(state);
 
   return (
     <>

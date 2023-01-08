@@ -1,5 +1,7 @@
 import formatDistance from "date-fns/formatDistance";
 import Image from "next/image";
+import { useAppDispatch } from "../../app/hooks";
+import { addToCart } from "../../features/ProductSlice/ProductSlice";
 
 type Props = {
   item: any;
@@ -9,6 +11,12 @@ const Card = ({ item }: Props) => {
   var timeDistance = formatDistance(new Date(), new Date(item?.createdAt), {
     includeSeconds: true,
   });
+  const dispatch = useAppDispatch();
+
+  /* handle add to cart */
+  const handleAddToCart = (item: any) => {
+    dispatch(addToCart(item));
+  };
 
   return (
     <div className="">
@@ -72,7 +80,10 @@ const Card = ({ item }: Props) => {
               </h3>
             </div>
             <div className="my-2">
-              <button className="bg-indigo-700 text-white w-full py-2 rounded-md">
+              <button
+                className="bg-indigo-700 text-white w-full py-2 rounded-md"
+                onClick={() => handleAddToCart(item)}
+              >
                 Add to cart
               </button>
             </div>

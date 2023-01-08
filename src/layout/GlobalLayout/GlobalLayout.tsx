@@ -12,6 +12,7 @@ const GlobalLayout = ({ children }: Props) => {
   const [show, setShow] = useState(false);
   const [{ aide }, setCookie, removeCookie] = useCookies(["aide"]);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { count } = useAppSelector((state) => state.product);
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (aide) {
@@ -103,8 +104,8 @@ const GlobalLayout = ({ children }: Props) => {
                 <li className="text-gray-700 hover:text-gray-900 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10">
                   <Link href="/carts" className="flex items-center">
                     Carts{" "}
-                    <sup className="badge bg-blue-50 text-blue-500 border border-blue-200 w-6 h-6 grid place-items-center p-2 rounded-full">
-                      0
+                    <sup className="badge bg-blue-50 text-blue-500 border border-blue-200 w-6 h-6 grid place-items-center rounded-full">
+                      {count}
                     </sup>
                   </Link>
                 </li>
