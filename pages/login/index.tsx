@@ -46,7 +46,7 @@ const Login = (props: Props) => {
   // handle login redirect
   useEffect(() => {
     if (aide?.token) {
-      router.push("/dashboard");
+      router.push(Object.keys(router?.components)[0] || "/dashboard");
     }
   }, [aide, router]);
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BiDesktop,
   BiDotsVertical,
@@ -8,6 +8,8 @@ import {
   BiUser,
   BiUserCheck,
 } from "react-icons/bi";
+import swal from "sweetalert";
+import { useDeleteUserMutation } from "../../../api/UserApi";
 
 type Props = {
   item: any;
@@ -15,6 +17,37 @@ type Props = {
 
 const UserRow = ({ item }: Props) => {
   const [isOpenAction, setIsOpenAction] = useState(false);
+  const [DeleteUser, { data, isLoading, error }] = useDeleteUserMutation();
+
+  // handle delete
+  const handleDelete = async (id: string) => {
+    try {
+      const isConfirm = await swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: ["cancel", "ok, delete it"],
+        dangerMode: true,
+      });
+
+      if (isConfirm) {
+        await DeleteUser(id);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // handle error
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      console.log(error);
+    }
+  }, [data, error]);
+
   return (
     <tr className="p-4 border-b">
       <td className="p-2 px-10">
@@ -95,7 +128,12 @@ const UserRow = ({ item }: Props) => {
           {isOpenAction && (
             <ul className="text-sm w-16 text-left bg-gray-50 p-2 absolute right-[1rem] top-1 shadow">
               <li className="text-xs border-b py-1">Edit</li>
-              <li className="text-xs border-b py-1 text-red-400">Delete</li>
+              <li
+                className="text-xs border-b py-1 text-red-400 cursor-pointer"
+                onClick={() => handleDelete(item?._id)}
+              >
+                {isLoading ? "deleting.." : " Delete "}
+              </li>
             </ul>
           )}
         </div>

@@ -84,7 +84,7 @@ const UsersManage = (props: Props) => {
                   <table className="sm:w-full text-left p-4">
                     <thead className="bg-gray-50">
                       <tr className="border-b">
-                        <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-8">
+                        <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16">
                           USER
                         </th>
                         <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
