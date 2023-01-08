@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useCookies from "react-cookie/cjs/useCookies";
@@ -12,7 +13,7 @@ type Props = {
 const DashboardLayout = ({ children }: Props) => {
   const [isHide, setIsHide] = useState(false);
   const [{ aide }, setCookie, removeCookie] = useCookies(["aide"]);
-  const { token } = useAppSelector((state) => state.auth);
+  const { token, user } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -44,8 +45,16 @@ const DashboardLayout = ({ children }: Props) => {
             <div className="notification cursor-pointer">
               <BsBell />
             </div>
-            <div className="avatar w-10 h-10 border rounded-full cursor-pointer">
-              A
+            <div
+              className="avatar w-10 h-10 border rounded-full cursor-pointer overflow-hidden"
+              title={user?.name}
+            >
+              <Image
+                src={user?.avatar?.url || "/images/avatar.png"}
+                alt="avatar"
+                width={30}
+                height={30}
+              />
             </div>
           </div>
         </div>

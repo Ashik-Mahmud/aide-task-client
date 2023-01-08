@@ -32,8 +32,15 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
     },
+    logout: (state) => {
+      cookies.remove("aide", { path: "/" });
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.token = null;
+      state.user = null;
+    },
   },
 });
 
-export const { loginSuccess, setCredentials } = authSlice.actions;
+export const { loginSuccess, setCredentials, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import { BsEye } from "react-icons/bs";
 import Cookies from "universal-cookie";
 import { useLoginMutation } from "../../api/AuthApi";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch } from "../../app/hooks";
 import { loginSuccess } from "../../features/AuthSlice/AuthSlice";
 const cookies = new Cookies();
 type Props = {};
@@ -23,7 +24,7 @@ const Login = (props: Props) => {
   const [loginAuthentication, { data, isLoading, error }] =
     useLoginMutation<any>();
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
+  const [{ aide }] = useCookies(["aide"]);
 
   // handle login submit
   const handleLoginSubmit = handleSubmit(async (data) => {
@@ -38,16 +39,16 @@ const Login = (props: Props) => {
       router.push("/dashboard");
     }
     if (error) {
-      console.log(error);
       cogoToast.error(error?.data?.message);
     }
   }, [data, error, router, dispatch]);
 
+  // handle login redirect
   useEffect(() => {
-    if (token) {
+    if (aide?.token) {
       router.push("/dashboard");
     }
-  }, [router, token]);
+  }, [aide, router]);
 
   return (
     <>
@@ -142,13 +143,23 @@ const Login = (props: Props) => {
               }
             </div>
             <div className="mt-8">
-              <button
-                role="button"
-                aria-label="create my account"
-                className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 text-md font-semibold leading-none text-white focus:outline-none bg-indigo-600 border rounded hover:bg-indigo-500 py-4 w-full font-poppins "
-              >
-                Login to my account
-              </button>
+              {isLoading ? (
+                <button
+                  role="button"
+                  aria-label="create my account"
+                  className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 text-md font-semibold leading-none text-white focus:outline-none bg-indigo-600 border rounded hover:bg-indigo-500 py-4 w-full font-poppins opacity-50 cursor-not-allowed"
+                >
+                  Loading...
+                </button>
+              ) : (
+                <button
+                  role="button"
+                  aria-label="create my account"
+                  className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 text-md font-semibold leading-none text-white focus:outline-none bg-indigo-600 border rounded hover:bg-indigo-500 py-4 w-full font-poppins "
+                >
+                  Login to my account
+                </button>
+              )}
             </div>
           </form>
         </div>
