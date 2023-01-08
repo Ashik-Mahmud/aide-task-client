@@ -65,6 +65,11 @@ const Card = (props: Props) => {
               </h2>
               <h3 className="text-indigo-700 text-xl font-semibold">$350</h3>
             </div>
+            <div className="my-2">
+              <button className="bg-indigo-700 text-white w-full py-2 rounded-md">
+                Add to cart
+              </button>
+            </div>
           </div>
         </div>
       </div>
