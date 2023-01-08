@@ -8,7 +8,6 @@ type Props = {};
 const Products = (props: Props) => {
   const { data, isLoading, error } = useGetAllProductQuery({});
 
-  console.log(data, error);
   return (
     <>
       <Head>

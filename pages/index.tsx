@@ -2,13 +2,16 @@ import { Inter } from "@next/font/google";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import { useGetAllProductQuery } from "../api/UserApi";
 import Card from "../src/components/Card";
 import Hero from "../src/components/Hero";
+import Loader from "../src/components/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [show, setShow] = useState(false);
+  const { data, isLoading, error } = useGetAllProductQuery({});
 
   return (
     <>
@@ -34,12 +37,23 @@ export default function Home() {
                 online
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-            </div>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                {data?.products?.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                      {data?.products?.slice(0, 4)?.map((item: any) => (
+                        <Card key={item?._id} item={item} />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <h2 className="text-xl text-center py-5">No data found</h2>
+                )}
+              </>
+            )}
 
             <div className="text-right">
               <Link href={"/products"} className="underline mt-5 inline-block">

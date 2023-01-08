@@ -11,12 +11,12 @@ const Card = ({ item }: Props) => {
   });
 
   return (
-    <div>
+    <div className="">
       <div className="mx-2  lg:mb-0 mb-8">
         <div>
           <Image
             src={item?.image?.url || "/Bitmap.png"}
-            className="w-full h-44 border-b object-cover"
+            className="w-full  border-b h-52"
             width={300}
             height={200}
             alt={item?.name || "iphone XS"}
