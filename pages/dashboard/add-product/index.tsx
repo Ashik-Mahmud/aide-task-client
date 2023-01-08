@@ -1,9 +1,42 @@
+import cogoToast from "cogo-toast";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useAddProductMutation } from "../../../api/UserApi";
 import DashboardLayout from "../../../src/layout/DashboardLayout/dashboardLayout";
 
 type Props = {};
 
 const AddProduct = (props: Props) => {
+  const [AddProduct, { data, isLoading, error }] = useAddProductMutation({});
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  // handle submit
+  const handleAddProduct = handleSubmit(async (data) => {
+    const formData = new FormData();
+    const { product, ...others } = data;
+    formData.append("product", product[0]);
+    formData.append("data", JSON.stringify(others));
+    await AddProduct(formData);
+  });
+
+  // error/success handler
+  useEffect(() => {
+    if (data) {
+      cogoToast.success(`Product added successfully done.`);
+      reset();
+    }
+    if (error) {
+      console.log(error);
+      cogoToast.error(`Something went wrong`);
+    }
+  }, [data, error, reset]);
+
   return (
     <>
       <Head>
@@ -11,7 +44,11 @@ const AddProduct = (props: Props) => {
       </Head>
       <div>
         <h1 className="text-2xl font-bold text-violet-500">Add Product</h1>
-        <form action="" className="bg-white p-10 rounded mt-4 font-poppins">
+        <form
+          action=""
+          className="bg-white p-10 rounded mt-4 font-poppins"
+          onSubmit={handleAddProduct}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4  ">
             <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
               <label
@@ -22,10 +59,13 @@ const AddProduct = (props: Props) => {
               </label>
               <input
                 type="text"
-                name="name"
+                {...register("name", { required: true })}
                 id="name"
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
               />
+              {errors.name && (
+                <small className="text-red-400 my-0">Required Name field</small>
+              )}
             </div>
             <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
               <label
@@ -36,10 +76,13 @@ const AddProduct = (props: Props) => {
               </label>
               <input
                 type="number"
-                name="price"
+                {...register("price", { required: true })}
                 id="price"
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
               />
+              {errors.price && (
+                <small className="text-red-500 my-0">Price is required</small>
+              )}
             </div>
             <div className="flex flex-col gap-2 col-span-2">
               <label
@@ -50,10 +93,15 @@ const AddProduct = (props: Props) => {
               </label>
               <input
                 type="number"
-                name="countInStock"
+                {...register("countInStock", { required: true })}
                 id="countInStock"
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
               />
+              {errors.countInStock && (
+                <small className="text-red-500 my-0">
+                  count In Stock is required
+                </small>
+              )}
             </div>
             <div className="flex flex-col gap-2 col-span-2">
               <label
@@ -63,10 +111,15 @@ const AddProduct = (props: Props) => {
                 Description
               </label>
               <textarea
-                name="description"
+                {...register("description", { required: true })}
                 id="description"
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
               />
+              {errors.description && (
+                <small className="text-red-500 my-0">
+                  description is required
+                </small>
+              )}
             </div>
             <div className="flex flex-col gap-2 col-span-2">
               <label
@@ -77,16 +130,28 @@ const AddProduct = (props: Props) => {
               </label>
               <input
                 type="file"
-                name="image"
+                {...register("product", { required: true })}
                 id="image"
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
               />
+              {errors.product && (
+                <small className="text-red-500 my-0">image is required</small>
+              )}
             </div>
           </div>
           <div className="text-right mt-4">
-            <button className="bg-violet-500 text-white px-4 py-2 rounded mt-4 text-right">
-              Add Product
-            </button>
+            {isLoading ? (
+              <button
+                className="bg-violet-500 text-white px-4 py-2 rounded mt-4 text-right opacity-50 cursor-not-allowed"
+                type="button"
+              >
+                Loading...
+              </button>
+            ) : (
+              <button className="bg-violet-500 text-white px-4 py-2 rounded mt-4 text-right">
+                Add Product
+              </button>
+            )}
           </div>
         </form>
       </div>

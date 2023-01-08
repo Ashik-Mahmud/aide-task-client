@@ -32,8 +32,41 @@ const UserApi = createApi({
         `/user/all?page=${data?.page}&limit=${data?.limit}&q=${data?.q}`,
       providesTags: ["User"],
     }),
+
+    deleteUser: builder.mutation({
+      query: (data: any) => ({
+        url: `/user/delete/${data?.id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    editUser: builder.mutation({
+      query: (data: any) => ({
+        url: `/user/update/${data?.id}`,
+        method: "PUT",
+        body: data.data,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    // products
+    addProduct: builder.mutation({
+      query: (data: any) => ({
+        url: `/product/create`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useCreateUserMutation } = UserApi;
+export const {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+  useEditUserMutation,
+  useAddProductMutation,
+} = UserApi;
 export default UserApi;
