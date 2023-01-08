@@ -10,9 +10,12 @@ export default function App({ Component, pageProps }: AppProps | any) {
     Component.getLayout ||
     ((page: React.ReactNode) => <GlobalLayout>{page}</GlobalLayout>);
 
-  return getLayout(
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+  return (
+    <>
+      <Provider store={store}>
+        {getLayout(<Component {...pageProps} />)}
+      </Provider>
+      ;
+    </>
   );
 }

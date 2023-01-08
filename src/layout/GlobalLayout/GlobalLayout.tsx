@@ -1,12 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useAppDispatch } from "../../../app/hooks";
+import { setCredentials } from "../../../features/AuthSlice/AuthSlice";
 type Props = {
   children: React.ReactNode;
 };
 
 const GlobalLayout = ({ children }: Props) => {
   const [show, setShow] = useState(false);
+  const [{ aide }, setCookie, removeCookie] = useCookies(["aide"]);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (aide) {
+      dispatch(setCredentials(aide));
+    }
+  }, [aide, dispatch]);
   return (
     <>
       <nav className="w-full border-b bg-gray-100">

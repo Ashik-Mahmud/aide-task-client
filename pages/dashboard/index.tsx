@@ -1,10 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useAppSelector } from "../../app/hooks";
 import DashboardLayout from "../../src/layout/DashboardLayout/dashboardLayout";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  const state = useAppSelector((state) => state.auth);
+  console.log(state);
   return (
     <>
       <Head>

@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useCookies from "react-cookie/cjs/useCookies";
 import { BsBell, BsMoon } from "react-icons/bs";
+import { useAppDispatch } from "../../../app/hooks";
+import { setCredentials } from "../../../features/AuthSlice/AuthSlice";
 import Sidebar from "./sidebar/Sidebar";
 type Props = {
   children: React.ReactNode;
@@ -7,6 +10,13 @@ type Props = {
 
 const DashboardLayout = ({ children }: Props) => {
   const [isHide, setIsHide] = useState(false);
+  const [{ aide }, setCookie, removeCookie] = useCookies(["aide"]);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (aide) {
+      dispatch(setCredentials(aide));
+    }
+  }, [aide, dispatch]);
   return (
     <section className="dashboard ">
       {/* sidebar */}
