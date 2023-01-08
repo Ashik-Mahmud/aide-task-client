@@ -1,9 +1,45 @@
+import cogoToast from "cogo-toast";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { BsEye } from "react-icons/bs";
+import Cookies from "universal-cookie";
+import { useLoginMutation } from "../../api/AuthApi";
+const cookies = new Cookies();
 type Props = {};
 const Login = (props: Props) => {
+  // import hooks
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+  const router = useRouter();
+
+  const [loginAuthentication, { data, isLoading, error }] =
+    useLoginMutation<any>();
+
+  // handle login submit
+  const handleLoginSubmit = handleSubmit(async (data) => {
+    await loginAuthentication(data);
+  });
+
+  // handle login error/success
+  useEffect(() => {
+    if (data) {
+      cogoToast.success("Login successful");
+      cookies.set("token", data?.token, { path: "/" });
+      router.push("/dashboard");
+    }
+    if (error) {
+      console.log(error);
+      cogoToast.error(error?.data?.message);
+    }
+  }, [data, error, router]);
+
   return (
     <>
       <Head>
@@ -20,7 +56,10 @@ const Login = (props: Props) => {
               alt=""
             />
           </Link>
-          <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
+          <form
+            onSubmit={handleLoginSubmit}
+            className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-16"
+          >
             <p
               tabIndex={0}
               aria-label="Login to your account"
@@ -57,7 +96,16 @@ const Login = (props: Props) => {
                 role="input"
                 type="email"
                 className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                {...register("email", { required: true })}
               />
+              {
+                // show error message if email is not valid
+                errors.email && (
+                  <p className="text-xs text-red-500 font-medium">
+                    Email is required
+                  </p>
+                )
+              }
             </div>
             <div className="mt-6  w-full">
               <label className="text-sm font-medium leading-none text-gray-800">
@@ -69,11 +117,20 @@ const Login = (props: Props) => {
                   role="input"
                   type="password"
                   className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                  {...register("password", { required: true })}
                 />
                 <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                   <BsEye />
                 </div>
               </div>
+              {
+                // show error message if password is not valid
+                errors.password && (
+                  <p className="text-xs text-red-500 font-medium">
+                    Password is required
+                  </p>
+                )
+              }
             </div>
             <div className="mt-8">
               <button
@@ -84,7 +141,7 @@ const Login = (props: Props) => {
                 Login to my account
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </section>
     </>
