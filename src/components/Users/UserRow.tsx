@@ -1,11 +1,20 @@
 import Image from "next/image";
-import { BiDotsVertical } from "react-icons/bi";
+import { useState } from "react";
+import {
+  BiDesktop,
+  BiDotsVertical,
+  BiPen,
+  BiPlus,
+  BiUser,
+  BiUserCheck,
+} from "react-icons/bi";
 
 type Props = {
   item: any;
 };
 
 const UserRow = ({ item }: Props) => {
+  const [isOpenAction, setIsOpenAction] = useState(false);
   return (
     <tr className="p-4 border-b">
       <td className="p-2 px-10">
@@ -37,25 +46,25 @@ const UserRow = ({ item }: Props) => {
         )}
         {item?.role === "editor" && (
           <div className="flex items-center gap-2 text-gray-500 font-thin justify-center">
-            <Image src={"/Vector.png"} width={20} height={20} alt="Admin" />
+            <BiPen size={20} />
             Editor
           </div>
         )}
         {item?.role === "maintainer" && (
           <div className="flex items-center gap-2 text-gray-500 font-thin justify-center">
-            <Image src={"/Vector.png"} width={20} height={20} alt="Admin" />
+            <BiDesktop size={20} />
             Maintainer
           </div>
         )}
         {item?.role === "subscriber" && (
           <div className="flex items-center gap-2 text-gray-500 font-thin justify-center">
-            <Image src={"/Vector.png"} width={20} height={20} alt="Admin" />
+            <BiUser size={20} className="text-indigo-500" />
             Subscriber
           </div>
         )}
         {item?.role === "author" && (
           <div className="flex items-center gap-2 text-gray-500 font-thin justify-center">
-            <Image src={"/Vector.png"} width={20} height={20} alt="author" />
+            <BiUserCheck size={20} />
             Author
           </div>
         )}
@@ -79,8 +88,16 @@ const UserRow = ({ item }: Props) => {
         </div>
       </td>
       <td className="text-center  p-2">
-        <div className="flex items-center justify-center cursor-pointer">
-          <BiDotsVertical />
+        <div className="flex items-center justify-center cursor-pointer relative">
+          <span onClick={() => setIsOpenAction((prev) => !prev)}>
+            {isOpenAction ? <BiPlus /> : <BiDotsVertical />}
+          </span>
+          {isOpenAction && (
+            <ul className="text-sm w-16 text-left bg-gray-50 p-2 absolute right-[1rem] top-1 shadow">
+              <li className="text-xs border-b py-1">Edit</li>
+              <li className="text-xs border-b py-1 text-red-400">Delete</li>
+            </ul>
+          )}
         </div>
       </td>
     </tr>
