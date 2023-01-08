@@ -1,7 +1,8 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useCookies from "react-cookie/cjs/useCookies";
 import { BsBell, BsMoon } from "react-icons/bs";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { setCredentials } from "../../../features/AuthSlice/AuthSlice";
 import Sidebar from "./sidebar/Sidebar";
 type Props = {
@@ -11,12 +12,21 @@ type Props = {
 const DashboardLayout = ({ children }: Props) => {
   const [isHide, setIsHide] = useState(false);
   const [{ aide }, setCookie, removeCookie] = useCookies(["aide"]);
+  const { token } = useAppSelector((state) => state.auth);
+  const router = useRouter();
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (aide) {
       dispatch(setCredentials(aide));
     }
   }, [aide, dispatch]);
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router, token]);
+
   return (
     <section className="dashboard ">
       {/* sidebar */}

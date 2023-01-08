@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { BsEye } from "react-icons/bs";
 import Cookies from "universal-cookie";
 import { useLoginMutation } from "../../api/AuthApi";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { loginSuccess } from "../../features/AuthSlice/AuthSlice";
 const cookies = new Cookies();
 type Props = {};
@@ -23,6 +23,7 @@ const Login = (props: Props) => {
   const [loginAuthentication, { data, isLoading, error }] =
     useLoginMutation<any>();
   const dispatch = useAppDispatch();
+  const { token } = useAppSelector((state) => state.auth);
 
   // handle login submit
   const handleLoginSubmit = handleSubmit(async (data) => {
@@ -41,6 +42,12 @@ const Login = (props: Props) => {
       cogoToast.error(error?.data?.message);
     }
   }, [data, error, router, dispatch]);
+
+  useEffect(() => {
+    if (token) {
+      router.push("/dashboard");
+    }
+  }, [router, token]);
 
   return (
     <>
