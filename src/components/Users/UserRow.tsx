@@ -6,8 +6,8 @@ type Props = {};
 const UserRow = (props: Props) => {
   return (
     <tr className="p-4 border-b">
-      <td className="p-2 px-8">
-        <div className="flex items-center gap-3">
+      <td className="p-2 px-10">
+        <div className="flex items-center gap-3 px-6">
           <div className="avatar">
             <Image src={"/Avatar.png"} width={35} height={35} alt="Avatar" />
           </div>
