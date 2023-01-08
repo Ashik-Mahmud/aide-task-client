@@ -1,5 +1,6 @@
 import cogoToast from "cogo-toast";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateUserMutation } from "../../../api/UserApi";
@@ -14,6 +15,7 @@ const AddUser = (props: Props) => {
     formState: { errors },
   } = useForm();
   const [addUser, { data, isLoading, error }] = useCreateUserMutation<any>();
+  const router = useRouter();
 
   // handle form submit
   const handleFormSubmit = handleSubmit(async (data) => {
@@ -29,12 +31,13 @@ const AddUser = (props: Props) => {
     if (data) {
       console.log(data);
       cogoToast.success("User added successfully");
+      router.push("/dashboard/users");
     }
     if (error) {
       console.log(error);
       cogoToast.error("Something went wrong");
     }
-  }, [data, error]);
+  }, [data, error, router]);
 
   return (
     <>

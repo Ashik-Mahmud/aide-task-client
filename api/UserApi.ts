@@ -8,7 +8,6 @@ const prepareHeaders = (headers: any, { getState }: any) => {
   const token = cookies.get("aide")?.token;
   if (token) {
     headers.set("authorization", `Bearer ${token}`);
-
     return headers;
   }
 };
@@ -29,7 +28,9 @@ const UserApi = createApi({
     }),
 
     getUsers: builder.query({
-      query: () => "/user/all",
+      query: (data: any) =>
+        `/user/all?page=${data?.page}&limit=${data?.limit}&q=${data?.q}`,
+      providesTags: ["User"],
     }),
   }),
 });
