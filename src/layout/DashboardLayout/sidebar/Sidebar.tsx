@@ -16,7 +16,7 @@ const Sidebar = ({ isHide, setIsHide }: Props) => {
     <div>
       <div className="sidebar-header flex items-center justify-between font-roboto">
         <h3 className="sidebar__title">
-          <Link href={"/"}>Admin Panel</Link>
+          <Link href={"/"}>Ashik Mahmud</Link>
         </h3>
         <span
           className="sidebar__left_arrow z-10 cursor-pointer"

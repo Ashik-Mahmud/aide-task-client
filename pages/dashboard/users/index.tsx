@@ -11,6 +11,14 @@ type Props = {};
 
 const UsersManage = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [showColumn, setShowColumn] = useState({
+    user: false,
+    email: false,
+    plan: false,
+    role: false,
+    status: false,
+  });
+  const [isCheckboxShow, setIsCheckboxShow] = useState(false);
   const [limit, setLimit] = useState(3);
   const [keyword, setKeyword] = useState("");
   const { data, isLoading } = useGetUsersQuery({
@@ -34,6 +42,8 @@ const UsersManage = (props: Props) => {
       setCurrentPage((prev) => prev + 1);
     }
   };
+
+  console.log(isCheckboxShow);
 
   return (
     <>
@@ -62,7 +72,10 @@ const UsersManage = (props: Props) => {
                     <BiExport />
                     PRINT
                   </button>
-                  <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
+                  <button
+                    className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500"
+                    onClick={() => setIsCheckboxShow((prev) => !prev)}
+                  >
                     SHOW/HIDE COLUMN
                   </button>
                 </div>
@@ -88,21 +101,92 @@ const UsersManage = (props: Props) => {
                   <table className="sm:w-full text-left p-4">
                     <thead className="bg-gray-50">
                       <tr className="border-b">
-                        <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16">
-                          USER
-                        </th>
-                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
-                          EMAIL
-                        </th>
-                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
-                          ROLE
-                        </th>
-                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
-                          PLAN
-                        </th>
-                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
-                          STATUS
-                        </th>
+                        {!showColumn?.user && (
+                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type={"checkbox"}
+                                defaultChecked
+                                className={`checked:bg-indigo-600  ${
+                                  isCheckboxShow ? " block " : " hidden "
+                                }`}
+                                onClick={() =>
+                                  setShowColumn({ ...showColumn, user: true })
+                                }
+                              />
+                              USER
+                            </div>
+                          </th>
+                        )}
+                        {!showColumn?.email && (
+                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type={"checkbox"}
+                                defaultChecked
+                                className={`checked:bg-indigo-600  ${
+                                  isCheckboxShow ? " block " : " hidden "
+                                }`}
+                                onClick={() =>
+                                  setShowColumn({ ...showColumn, email: true })
+                                }
+                              />
+                              EMAIL
+                            </div>
+                          </th>
+                        )}
+                        {!showColumn?.role && (
+                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type={"checkbox"}
+                                defaultChecked
+                                className={`checked:bg-indigo-600  ${
+                                  isCheckboxShow ? " block " : " hidden "
+                                }`}
+                                onClick={() =>
+                                  setShowColumn({ ...showColumn, role: true })
+                                }
+                              />
+                              ROLE
+                            </div>
+                          </th>
+                        )}
+                        {!showColumn?.plan && (
+                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type={"checkbox"}
+                                defaultChecked
+                                className={`checked:bg-indigo-600  ${
+                                  isCheckboxShow ? " block " : " hidden "
+                                }`}
+                                onClick={() =>
+                                  setShowColumn({ ...showColumn, plan: true })
+                                }
+                              />
+                              PLAN
+                            </div>
+                          </th>
+                        )}
+                        {!showColumn?.status && (
+                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type={"checkbox"}
+                                defaultChecked
+                                className={`checked:bg-indigo-600  ${
+                                  isCheckboxShow ? " block " : " hidden "
+                                }`}
+                                onClick={() =>
+                                  setShowColumn({ ...showColumn, status: true })
+                                }
+                              />
+                              STATUS
+                            </div>
+                          </th>
+                        )}
+
                         <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
                           ACTION
                         </th>
@@ -110,7 +194,11 @@ const UsersManage = (props: Props) => {
                     </thead>
                     <tbody>
                       {data?.users?.map((item: any) => (
-                        <UserRow key={item?._id} item={item} />
+                        <UserRow
+                          key={item?._id}
+                          item={item}
+                          showColumn={showColumn}
+                        />
                       ))}
                     </tbody>
                   </table>
