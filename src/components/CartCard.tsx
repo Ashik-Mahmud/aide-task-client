@@ -16,8 +16,8 @@ const CartCard = ({ cart }: Props) => {
   };
 
   return (
-    <div className="carts-body-left-item flex gap-4 shadow p-4 rounded justify-between items-center bg-gray-50">
-      <div className="flex items-start gap-5 ">
+    <div className="carts-body-left-item flex flex-col sm:flex-row gap-4 shadow p-4 rounded justify-between sm:items-center bg-gray-50 relative">
+      <div className="flex items-start gap-5 flex-col sm:flex-row">
         <div className="carts-body-left-item-image">
           <Image
             src={
@@ -47,7 +47,7 @@ const CartCard = ({ cart }: Props) => {
           </div>
         </div>
       </div>
-      <div className="carts-body-left-item-action flex items-center gap-5">
+      <div className="carts-body-left-item-action flex items-center gap-2 sm:gap-5 flex-row sm:flex-row">
         <div className="carts-body-left-item-info-stock-in flex items-center gap-3 bg-green-50 text-green-500 p-1 w-40 rounded text-center my-`">
           Stock in -<p> {cart?.countInStock}</p>
         </div>
@@ -60,7 +60,7 @@ const CartCard = ({ cart }: Props) => {
         </div>
         <div className="carts-body-left-item-action-delete">
           <button
-            className="text-red-500  p-2 text-2xl"
+            className="text-red-500  p-2 text-2xl absolute right-5 top-2 sm:relative sm:right-0 sm:top-0"
             onClick={handleRemoveToCart}
           >
             <BiX />

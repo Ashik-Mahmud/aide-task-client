@@ -19,7 +19,7 @@ const Carts = (props: Props) => {
         <title>Carts</title>
       </Head>
       <div className="container mx-auto my-5">
-        <div className="title my-3 font-bold font-poppins">
+        <div className="title my-3 font-bold font-poppins px-4">
           <h1 className="text-2xl">Carts</h1>
           <div className="divider w-32 h-1 bg-indigo-600 my-1"></div>
         </div>
@@ -28,7 +28,7 @@ const Carts = (props: Props) => {
 
         <div className="carts-area">
           <div className="carts ">
-            <div className="carts-header flex items-start justify-between">
+            <div className="carts-header flex items-start justify-between px-4">
               <div className="carts-header-left mb-4">
                 <div className="carts-header-left-title">
                   <h1>Shopping Cart</h1>
@@ -39,9 +39,9 @@ const Carts = (props: Props) => {
               </div>
             </div>
             {carts?.length > 0 ? (
-              <div className="carts-body grid grid-cols-6 items-start gap-5">
+              <div className="carts-body grid sm:grid-cols-6 items-start gap-5">
                 <>
-                  <div className="carts-body-left flex flex-col gap-3 col-span-4">
+                  <div className="carts-body-left flex flex-col gap-3 sm:col-span-4">
                     {sortedCarts.map((cart: any) => (
                       <CartCard key={cart?._id} cart={cart} />
                     ))}
@@ -49,7 +49,7 @@ const Carts = (props: Props) => {
                 </>
 
                 {/* total dashboard */}
-                <div className="carts-total-dashboard  col-span-2 p-5 bg-gray-50">
+                <div className="carts-total-dashboard  sm:col-span-2 p-5 bg-gray-50">
                   <div className="carts-total-dashboard-header flex justify-between items-center p-4 shadow rounded bg-white">
                     <div className="carts-total-dashboard-header-left">
                       <h1 className="text-xl">Subtotal</h1>
