@@ -140,7 +140,10 @@ const UserRow = ({ item, showColumn }: Props) => {
       )}
       <td className="text-center p-2">
         <div className="flex items-center justify-center cursor-pointer relative w-48 mx-auto">
-          <span onClick={() => setIsOpenAction((prev) => !prev)}>
+          <span
+            onClick={() => setIsOpenAction((prev) => !prev)}
+            className="text-right block"
+          >
             {isOpenAction ? <BiPlus /> : <BiDotsVertical />}
           </span>
           {isOpenAction && (

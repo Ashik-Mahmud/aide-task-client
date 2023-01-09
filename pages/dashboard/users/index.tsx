@@ -1,8 +1,11 @@
+import * as FileSaver from "file-saver";
 import Head from "next/head";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiChevronLeft, BiChevronRight, BiExport } from "react-icons/bi";
 import ReactToPrint from "react-to-print";
+import swal from "sweetalert";
+import * as XLSX from "xlsx";
 import { useGetUsersQuery } from "../../../api/UserApi";
 import Loader from "../../../src/components/Loader";
 import PrintUserTemp from "../../../src/components/Users/PrintUserTemp";
@@ -12,6 +15,7 @@ type Props = {};
 
 const UsersManage = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [exportData, setExportData] = useState([]);
   const [showColumn, setShowColumn] = useState({
     user: false,
     email: false,
@@ -45,6 +49,73 @@ const UsersManage = (props: Props) => {
     }
   };
 
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+  const handleExportExcel = async (exportData: any) => {
+    const filename = await swal({
+      title: "Are you sure?",
+      text: "You want to export this payments?",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "Put the file name here",
+          type: "text",
+        },
+      },
+    });
+    if (!filename) {
+      swal("Cancelled", "Your did't put any name :)", "error");
+      return;
+    }
+    if (filename?.length < 6) {
+      swal("Error", "File name must be at least 5 characters", "error");
+      return;
+    }
+
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    XLSX.utils.sheet_add_aoa(
+      ws,
+      [
+        [
+          "Index",
+          "User",
+          "Username",
+          "Email",
+          "Role",
+          "Plan",
+          "Status",
+          "Date",
+        ],
+      ],
+      {
+        origin: "A1",
+      }
+    );
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, filename + fileExtension);
+    swal("Success", "Your file has been exported", "success");
+  };
+
+  useEffect(() => {
+    const exportData = data?.users.map((user: any, index: number) => {
+      return {
+        Index: index + 1,
+        User: user?.name,
+        Username: user?.username,
+        Email: user?.email,
+        Role: user?.role,
+        Plan: user?.plan,
+        status: user?.status,
+        Date: user?.createdAt,
+      };
+    });
+
+    setExportData(exportData);
+  }, [data]);
+
   return (
     <>
       {!isLoading && <PrintUserTemp printRef={printRef} data={data?.users} />}
@@ -66,7 +137,10 @@ const UsersManage = (props: Props) => {
                   <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
                     <BiExport /> PDF
                   </button>
-                  <button className="btn p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
+                  <button
+                    className="btn p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500"
+                    onClick={() => handleExportExcel(exportData)}
+                  >
                     <BiExport />
                     Excel
                   </button>
@@ -197,7 +271,7 @@ const UsersManage = (props: Props) => {
                           </th>
                         )}
 
-                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5 text-center">
+                        <th className="text-gray-500 font-roboto font-medium border-r pl-14 text-sm p-3 py-4 border-spacing-5 text-center">
                           ACTION
                         </th>
                       </tr>
