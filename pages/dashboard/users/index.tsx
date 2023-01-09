@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import { BiChevronLeft, BiChevronRight, BiExport } from "react-icons/bi";
 import { useGetUsersQuery } from "../../../api/UserApi";
@@ -74,9 +75,12 @@ const UsersManage = (props: Props) => {
                       onChange={(e) => setKeyword(e.target.value)}
                     />
                   </div>
-                  <button className="btn btn-primary py-2 px-5 bg-violet-500 text-white rounded shadow">
+                  <Link
+                    href={"/dashboard/add-user"}
+                    className="btn btn-primary py-2 px-5 bg-violet-500 text-white rounded shadow"
+                  >
                     Add User
-                  </button>
+                  </Link>
                 </div>
               </div>
               {data?.users?.length > 0 ? (
