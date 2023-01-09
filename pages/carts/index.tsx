@@ -11,6 +11,7 @@ const Carts = (props: Props) => {
   const inTotal = carts?.reduce((acc: number, item: any) => {
     return item?.quantity * item?.price + acc;
   }, 0);
+  const sortedCarts = [...carts]?.sort((a: any, b: any) => a.order - b.order);
 
   return (
     <div>
@@ -41,7 +42,7 @@ const Carts = (props: Props) => {
               <div className="carts-body grid grid-cols-6 items-start gap-5">
                 <>
                   <div className="carts-body-left flex flex-col gap-3 col-span-4">
-                    {carts.map((cart: any) => (
+                    {sortedCarts.map((cart: any) => (
                       <CartCard key={cart?._id} cart={cart} />
                     ))}
                   </div>

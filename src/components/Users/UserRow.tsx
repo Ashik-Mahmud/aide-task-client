@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   BiDesktop,
@@ -127,7 +128,9 @@ const UserRow = ({ item }: Props) => {
           </span>
           {isOpenAction && (
             <ul className="text-sm w-16 text-left bg-gray-50 p-2 absolute right-[1rem] top-1 shadow">
-              <li className="text-xs border-b py-1">Edit</li>
+              <li className="text-xs border-b py-1">
+                <Link href={`/dashboard/users/${item?._id}`}>Edit</Link>
+              </li>
               <li
                 className="text-xs border-b py-1 text-red-400 cursor-pointer"
                 onClick={() => handleDelete(item?._id)}

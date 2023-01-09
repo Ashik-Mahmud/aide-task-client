@@ -9,9 +9,7 @@ type Props = {};
 const Products = (props: Props) => {
   const { data, isLoading, error } = useGetAllProductQuery({});
   const state = useAppSelector((state) => state.product);
-
   console.log(state);
-
   return (
     <>
       <Head>

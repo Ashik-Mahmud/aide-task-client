@@ -36,6 +36,7 @@ const productSlice = createSlice({
           (cart: any) => cart?._id !== action?.payload
         );
         isHas.quantity = isHas.quantity - 1;
+        state.count = state.count - 1;
         state.carts = [...remaining, isHas];
         if (isHas.quantity === 0) {
           state.carts = remaining;
