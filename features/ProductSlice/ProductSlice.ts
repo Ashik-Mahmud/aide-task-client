@@ -16,9 +16,13 @@ const productSlice = createSlice({
         const remaining = state?.carts.filter(
           (cart: any) => cart?._id !== action?.payload?._id
         );
-        isHas.quantity = isHas?.quantity + 1;
-        state.carts = [...remaining, isHas];
-        state.count = state.count + 1;
+        if (isHas?.quantity < isHas?.countInStock) {
+          isHas.quantity = isHas?.quantity + 1;
+          state.carts = [...remaining, isHas];
+          state.count = state.count + 1;
+        } else {
+          alert(`Stock out`);
+        }
       } else {
         state.carts = [
           ...state.carts,

@@ -154,7 +154,9 @@ const UsersManage = (props: Props) => {
                   )}
                 </>
               ) : (
-                <div>no data found</div>
+                <div className="text-center capitalize py-10">
+                  no data found
+                </div>
               )}
             </>
           )}

@@ -73,10 +73,18 @@ const Card = ({ item }: Props) => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between pt-4">
               <h2 className="text-indigo-700 text-xs font-semibold">Price</h2>
               <h3 className="text-indigo-700 text-xl font-semibold">
                 ${item?.price}
+              </h3>
+            </div>
+            <div className="flex items-center justify-between pb-4">
+              <h2 className="text-indigo-700 text-xs font-semibold">
+                Stock in count
+              </h2>
+              <h3 className="text-indigo-700 text-xl font-semibold">
+                {item?.countInStock} pieces
               </h3>
             </div>
             <div className="my-2">
