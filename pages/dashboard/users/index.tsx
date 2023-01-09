@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BiChevronLeft, BiChevronRight, BiExport } from "react-icons/bi";
+import ReactToPrint from "react-to-print";
 import { useGetUsersQuery } from "../../../api/UserApi";
 import Loader from "../../../src/components/Loader";
+import PrintUserTemp from "../../../src/components/Users/PrintUserTemp";
 import UserRow from "../../../src/components/Users/UserRow";
 import DashboardLayout from "../../../src/layout/DashboardLayout/dashboardLayout";
-
 type Props = {};
 
 const UsersManage = (props: Props) => {
@@ -21,6 +22,7 @@ const UsersManage = (props: Props) => {
   const [isCheckboxShow, setIsCheckboxShow] = useState(false);
   const [limit, setLimit] = useState(3);
   const [keyword, setKeyword] = useState("");
+  const printRef = useRef(null);
   const { data, isLoading } = useGetUsersQuery({
     page: currentPage,
     limit,
@@ -43,10 +45,10 @@ const UsersManage = (props: Props) => {
     }
   };
 
-  console.log(isCheckboxShow);
-
   return (
     <>
+      {!isLoading && <PrintUserTemp printRef={printRef} data={data?.users} />}
+
       <Head>
         <title>Users Manage</title>
       </Head>
@@ -68,10 +70,18 @@ const UsersManage = (props: Props) => {
                     <BiExport />
                     Excel
                   </button>
-                  <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
-                    <BiExport />
-                    PRINT
-                  </button>
+
+                  <ReactToPrint
+                    trigger={() => {
+                      return (
+                        <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
+                          <BiExport />
+                          PRINT
+                        </button>
+                      );
+                    }}
+                    content={() => printRef.current}
+                  />
                   <button
                     className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500"
                     onClick={() => setIsCheckboxShow((prev) => !prev)}
@@ -153,7 +163,7 @@ const UsersManage = (props: Props) => {
                           </th>
                         )}
                         {!showColumn?.plan && (
-                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
+                          <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16  text-center">
                             <div className="flex items-center gap-2">
                               <input
                                 type={"checkbox"}
@@ -187,7 +197,7 @@ const UsersManage = (props: Props) => {
                           </th>
                         )}
 
-                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5">
+                        <th className="text-gray-500 font-roboto font-medium border-r pl-20 text-sm p-3 py-4 border-spacing-5 text-center">
                           ACTION
                         </th>
                       </tr>
