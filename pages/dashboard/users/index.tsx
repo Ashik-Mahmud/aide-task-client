@@ -55,7 +55,7 @@ const UsersManage = (props: Props) => {
   const handleExportExcel = async (exportData: any) => {
     const filename = await swal({
       title: "Are you sure?",
-      text: "You want to export this payments?",
+      text: "You want to export this users data? Put the file name here at least 5 characters",
       content: {
         element: "input",
         attributes: {
@@ -156,12 +156,124 @@ const UsersManage = (props: Props) => {
                     }}
                     content={() => printRef.current}
                   />
-                  <button
-                    className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500"
-                    onClick={() => setIsCheckboxShow((prev) => !prev)}
-                  >
-                    SHOW/HIDE COLUMN
-                  </button>
+                  <div className="dropdown relative">
+                    <button
+                      className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500"
+                      onClick={() => setIsCheckboxShow((prev) => !prev)}
+                    >
+                      SHOW/HIDE COLUMN
+                    </button>
+                    {/* dropdown column  */}
+                    <ul
+                      className={`absolute bg-white p-2 z-10 max-w-md w-full shadow font-poppins transition-all ${
+                        isCheckboxShow
+                          ? " scale-100 origin-top opacity-100 "
+                          : " scale-0 origin-top opacity-0 "
+                      }`}
+                    >
+                      <li className="flex items-center gap-1 select-none cursor-pointer p-2 hover:bg-gray-50">
+                        <input
+                          type={"checkbox"}
+                          defaultChecked
+                          className={`checked:bg-indigo-600 `}
+                          id="user"
+                          onClick={() =>
+                            setShowColumn({
+                              ...showColumn,
+                              user: !showColumn.user,
+                            })
+                          }
+                        />
+                        <label
+                          htmlFor="user"
+                          className="cursor-pointer uppercase font-poppins text-sm"
+                        >
+                          User
+                        </label>
+                      </li>
+                      <li className="flex items-center gap-1 select-none cursor-pointer p-2 hover:bg-gray-50 border-t">
+                        <input
+                          type={"checkbox"}
+                          defaultChecked
+                          className={`checked:bg-indigo-600 `}
+                          id="email"
+                          onClick={() =>
+                            setShowColumn({
+                              ...showColumn,
+                              email: !showColumn.email,
+                            })
+                          }
+                        />
+                        <label
+                          htmlFor="email"
+                          className="cursor-pointer uppercase font-poppins text-sm"
+                        >
+                          email
+                        </label>
+                      </li>
+                      <li className="flex items-center gap-1 select-none cursor-pointer p-2 hover:bg-gray-50 border-t">
+                        <input
+                          type={"checkbox"}
+                          defaultChecked
+                          className={`checked:bg-indigo-600 `}
+                          onClick={() =>
+                            setShowColumn({
+                              ...showColumn,
+                              role: !showColumn.role,
+                            })
+                          }
+                          id="role"
+                        />
+                        <label
+                          htmlFor="role"
+                          className="cursor-pointer uppercase font-poppins text-sm"
+                        >
+                          role
+                        </label>
+                      </li>
+                      <li className="flex items-center gap-1 select-none cursor-pointer p-2 hover:bg-gray-50 border-t">
+                        <input
+                          type={"checkbox"}
+                          defaultChecked
+                          onClick={() =>
+                            setShowColumn({
+                              ...showColumn,
+                              plan: !showColumn.plan,
+                            })
+                          }
+                          className={`checked:bg-indigo-600 `}
+                          id="PLAN"
+                        />
+                        <label
+                          htmlFor="PLAN"
+                          className="cursor-pointer uppercase font-poppins text-sm"
+                        >
+                          PLAN
+                        </label>
+                      </li>
+                      <li className="flex items-center gap-1 select-none cursor-pointer p-2 hover:bg-gray-50 border-t">
+                        <input
+                          type={"checkbox"}
+                          defaultChecked
+                          className={`checked:bg-indigo-600 `}
+                          id="status"
+                          onClick={() =>
+                            setShowColumn({
+                              ...showColumn,
+                              status: !showColumn.status,
+                            })
+                          }
+                        />
+                        <label
+                          htmlFor="status"
+                          className="cursor-pointer uppercase font-poppins text-sm"
+                        >
+                          status
+                        </label>
+                      </li>
+                    </ul>
+                    {/* end dropdown */}
+                  </div>
                 </div>
                 <div className="flex items-center justify-between gap-8">
                   <div className="search">
@@ -187,85 +299,27 @@ const UsersManage = (props: Props) => {
                       <tr className="border-b">
                         {!showColumn?.user && (
                           <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
-                            <div className="flex items-center gap-2">
-                              <input
-                                type={"checkbox"}
-                                defaultChecked
-                                className={`checked:bg-indigo-600  ${
-                                  isCheckboxShow ? " block " : " hidden "
-                                }`}
-                                onClick={() =>
-                                  setShowColumn({ ...showColumn, user: true })
-                                }
-                              />
-                              USER
-                            </div>
+                            <div className="flex items-center gap-2">USER</div>
                           </th>
                         )}
                         {!showColumn?.email && (
                           <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
-                            <div className="flex items-center gap-2">
-                              <input
-                                type={"checkbox"}
-                                defaultChecked
-                                className={`checked:bg-indigo-600  ${
-                                  isCheckboxShow ? " block " : " hidden "
-                                }`}
-                                onClick={() =>
-                                  setShowColumn({ ...showColumn, email: true })
-                                }
-                              />
-                              EMAIL
-                            </div>
+                            <div className="flex items-center gap-2">EMAIL</div>
                           </th>
                         )}
                         {!showColumn?.role && (
                           <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
-                            <div className="flex items-center gap-2">
-                              <input
-                                type={"checkbox"}
-                                defaultChecked
-                                className={`checked:bg-indigo-600  ${
-                                  isCheckboxShow ? " block " : " hidden "
-                                }`}
-                                onClick={() =>
-                                  setShowColumn({ ...showColumn, role: true })
-                                }
-                              />
-                              ROLE
-                            </div>
+                            <div className="flex items-center gap-2">ROLE</div>
                           </th>
                         )}
                         {!showColumn?.plan && (
                           <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16  text-center">
-                            <div className="flex items-center gap-2">
-                              <input
-                                type={"checkbox"}
-                                defaultChecked
-                                className={`checked:bg-indigo-600  ${
-                                  isCheckboxShow ? " block " : " hidden "
-                                }`}
-                                onClick={() =>
-                                  setShowColumn({ ...showColumn, plan: true })
-                                }
-                              />
-                              PLAN
-                            </div>
+                            <div className="flex items-center gap-2">PLAN</div>
                           </th>
                         )}
                         {!showColumn?.status && (
                           <th className="text-gray-500 font-roboto font-medium border-r text-sm p-3 py-4 border-spacing-5 pl-16 ">
                             <div className="flex items-center gap-2">
-                              <input
-                                type={"checkbox"}
-                                defaultChecked
-                                className={`checked:bg-indigo-600  ${
-                                  isCheckboxShow ? " block " : " hidden "
-                                }`}
-                                onClick={() =>
-                                  setShowColumn({ ...showColumn, status: true })
-                                }
-                              />
                               STATUS
                             </div>
                           </th>
