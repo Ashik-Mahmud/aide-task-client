@@ -1,7 +1,10 @@
 import formatDistance from "date-fns/formatDistance";
 import Image from "next/image";
-import { useAppDispatch } from "../../app/hooks";
-import { addToCart } from "../../features/ProductSlice/ProductSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  addToCart,
+  removeToCart,
+} from "../../features/ProductSlice/ProductSlice";
 
 type Props = {
   item: any;
@@ -17,6 +20,9 @@ const Card = ({ item }: Props) => {
   const handleAddToCart = (item: any) => {
     dispatch(addToCart(item));
   };
+
+  const carts = useAppSelector((state) => state?.product?.carts);
+  const selectedCart = carts?.find((cart: any) => cart?._id === item?._id);
 
   return (
     <div className="">
@@ -88,12 +94,32 @@ const Card = ({ item }: Props) => {
               </h3>
             </div>
             <div className="my-2">
-              <button
-                className="bg-indigo-700 text-white w-full py-2 rounded-md"
-                onClick={() => handleAddToCart(item)}
-              >
-                Add to cart
-              </button>
+              {selectedCart?.quantity > 0 ? (
+                <div className="flex items-center justify-between flex-row-reverse">
+                  <button
+                    className="w-full grid  place-items-center rounded bg-gray-100 text-2xl py-2"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    +
+                  </button>
+                  <p className="text-indigo-700 text-xl font-semibold w-full text-center ">
+                    {selectedCart?.quantity}
+                  </p>
+                  <button
+                    className="w-full grid  place-items-center rounded bg-gray-100 text-2xl py-2"
+                    onClick={() => dispatch(removeToCart(item?._id))}
+                  >
+                    -
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="bg-indigo-700 text-white w-full py-2 rounded-md"
+                  onClick={() => handleAddToCart(item)}
+                >
+                  Add to cart
+                </button>
+              )}
             </div>
           </div>
         </div>

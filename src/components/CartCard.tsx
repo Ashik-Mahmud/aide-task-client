@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { BiX } from "react-icons/bi";
 import { useAppDispatch } from "../../app/hooks";
-import { removeToCart } from "../../features/ProductSlice/ProductSlice";
+import {
+  addToCart,
+  removeToCart,
+} from "../../features/ProductSlice/ProductSlice";
 
 type Props = {
   cart: any;
@@ -52,11 +55,21 @@ const CartCard = ({ cart }: Props) => {
           Stock in -<p> {cart?.countInStock}</p>
         </div>
         <div className="flex items-center my-1 bg-white p-2">
-          <button className="w-10 h-10 bg-gray-50 text-xl">-</button>
+          <button
+            className="w-10 h-10 bg-gray-50 text-xl"
+            onClick={() => dispatch(removeToCart(cart?._id))}
+          >
+            -
+          </button>
           <span className="w-10 h-10 bg-gray-50 text-lg grid place-items-center">
             {cart?.quantity}
           </span>
-          <button className="w-10 h-10 bg-gray-50 text-xl">+</button>
+          <button
+            className="w-10 h-10 bg-gray-50 text-xl"
+            onClick={() => dispatch(addToCart(cart))}
+          >
+            +
+          </button>
         </div>
         <div className="carts-body-left-item-action-delete">
           <button

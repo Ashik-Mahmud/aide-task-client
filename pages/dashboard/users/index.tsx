@@ -58,7 +58,7 @@ const UsersManage = (props: Props) => {
   const handleExportExcel = async (exportData: any) => {
     const filename = await swal({
       title: "Are you sure?",
-      text: "You want to export this users data? Put the file name here at least 5 characters",
+      text: "You want to export this users data? Put the file name here at least 3 characters",
       content: {
         element: "input",
         attributes: {
