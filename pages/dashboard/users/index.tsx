@@ -1,3 +1,4 @@
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import * as FileSaver from "file-saver";
 import Head from "next/head";
 import Link from "next/link";
@@ -8,6 +9,7 @@ import swal from "sweetalert";
 import * as XLSX from "xlsx";
 import { useGetUsersQuery } from "../../../api/UserApi";
 import Loader from "../../../src/components/Loader";
+import PdfTemplate from "../../../src/components/Users/PdfTemplate";
 import PrintUserTemp from "../../../src/components/Users/PrintUserTemp";
 import UserRow from "../../../src/components/Users/UserRow";
 import DashboardLayout from "../../../src/layout/DashboardLayout/dashboardLayout";
@@ -24,9 +26,10 @@ const UsersManage = (props: Props) => {
     status: false,
   });
   const [isCheckboxShow, setIsCheckboxShow] = useState(false);
+
   const [limit, setLimit] = useState(3);
   const [keyword, setKeyword] = useState("");
-  const printRef = useRef(null);
+  const printRef = useRef<HTMLElement | any>(null);
   const { data, isLoading } = useGetUsersQuery({
     page: currentPage,
     limit,
@@ -68,8 +71,8 @@ const UsersManage = (props: Props) => {
       swal("Cancelled", "Your did't put any name :)", "error");
       return;
     }
-    if (filename?.length < 6) {
-      swal("Error", "File name must be at least 5 characters", "error");
+    if (filename?.length < 3) {
+      swal("Error", "File name must be at least 3 characters", "error");
       return;
     }
 
@@ -118,7 +121,13 @@ const UsersManage = (props: Props) => {
 
   return (
     <>
-      {!isLoading && <PrintUserTemp printRef={printRef} data={data?.users} />}
+      {!isLoading && (
+        <PrintUserTemp
+          printRef={printRef}
+          data={data?.users}
+          showColumn={showColumn}
+        />
+      )}
 
       <Head>
         <title>Users Manage</title>
@@ -134,9 +143,21 @@ const UsersManage = (props: Props) => {
             <>
               <div className="action-btns flex items-center justify-between my-3 p-2 px-5 ">
                 <div className="flex items-center gap-3">
-                  <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
-                    <BiExport /> PDF
-                  </button>
+                  <PDFDownloadLink
+                    document={<PdfTemplate data={data?.users} />}
+                    fileName="users.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? (
+                        "Loading document..."
+                      ) : (
+                        <button className="btn btn-primary p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500">
+                          <BiExport /> PDF
+                        </button>
+                      )
+                    }
+                  </PDFDownloadLink>
+
                   <button
                     className="btn p-2 flex items-center gap-2 bg-transparent border px-5 rounded text-sm text-gray-500"
                     onClick={() => handleExportExcel(exportData)}
